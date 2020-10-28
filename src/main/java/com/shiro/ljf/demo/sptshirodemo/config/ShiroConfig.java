@@ -29,7 +29,11 @@ public class ShiroConfig {
         ShiroFilterFactoryBean shiroFilterFactoryBean = new ShiroFilterFactoryBean();
         //注入安全管理器
         shiroFilterFactoryBean.setSecurityManager(securityManager);
-
+        //设置过滤资源
+        Map<String,String> map =  new LinkedHashMap<>();
+        map.put("/**","authc");
+        /** 代表拦截项目中一切资源  authc 代表shiro中的一个filter的别名,详细内容看文档的shirofilter列表**/
+        shiroFilterFactoryBean.setFilterChainDefinitionMap(map);
         return shiroFilterFactoryBean;
     }
     //2.创建安全管理器
