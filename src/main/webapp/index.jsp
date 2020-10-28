@@ -10,8 +10,10 @@
     <title>Document</title>
 </head>
 <body>
-<h1>人力管理系统主页V1.0</h1>
-<h>欢迎登录啊！！！</h>
 
+<h1>人力管理系统主页V1.0</h1>
+<h>欢迎登录啊！！！</h><br>
+<p><a href="#">订单管理</a> </p>
+<p><a href="#">用户管理</a> </p>
 </body>
 </html>
