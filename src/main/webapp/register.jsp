@@ -1,5 +1,4 @@
 <%@page contentType="text/html; UTF-8" pageEncoding="UTF-8" isELIgnored="false" %>
-<%@taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
 <!doctype html>
 <html lang="en">
 <head>
@@ -11,16 +10,14 @@
 </head>
 <body>
 
-<h>先访问index 跳转到login ，login页面提交后，认证通过后跳转到主页面，失败回到login页面，并携带提示信息</h>
-<h>欢迎观看登录界面</h><br>
-<h1>用户登录</h1>
+<h1>用户注册</h1>
 
 
-<form action="${pageContext.request.contextPath}/user/login" method="post">
+<form action="${pageContext.request.contextPath}/user/register" method="post">
     用户名:<input type="text" name="username" > <br/>
     密码  : <input type="text" name="password"> <br>
-    <input type="submit" value="登录">
+    <input type="submit" value="立即注册">
 </form>
-错误信息:${error}
+
 </body>
 </html>

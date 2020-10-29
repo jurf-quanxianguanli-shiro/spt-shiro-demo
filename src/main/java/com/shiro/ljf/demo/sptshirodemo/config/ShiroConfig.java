@@ -24,7 +24,7 @@ public class ShiroConfig {
     //1.创建shiroFilter ：负责拦截所有请求
     @Bean
     public ShiroFilterFactoryBean getShiroFilterFactoryBean(@Qualifier("securityManager") DefaultWebSecurityManager securityManager){
-
+       System.out.println("进入过滤器");
         //创建shiro的filter，配置shiroFilterFactoryBean
         ShiroFilterFactoryBean shiroFilterFactoryBean = new ShiroFilterFactoryBean();
         //注入安全管理器
@@ -33,8 +33,14 @@ public class ShiroConfig {
         Map<String,String> map =  new LinkedHashMap<>();
         //map.put("/**","authc");
         /** 代表拦截项目中一切资源  authc 代表shiro中的一个filter的别名,详细内容看文档的shirofilter列表**/
-        map.put("/index.jsp","authc");//验证资源
-        map.put("/index*","authc");//验证资源
+        //map.put("/index.jsp","authc");//验证资源
+
+        //map.put("/index*","anon");//验证资源 anon  匿名访问，可以跳转到index要访问的controller
+        //设置公共资源
+        map.put("/user/login","anon");
+        //设置受限资源
+
+        map.put("/index*","authc");//验证资源，受限资源，跳转登录login.jsp页面
         shiroFilterFactoryBean.setLoginUrl("/login.jsp");
         shiroFilterFactoryBean.setFilterChainDefinitionMap(map);
         return shiroFilterFactoryBean;
@@ -42,6 +48,7 @@ public class ShiroConfig {
     //2.创建安全管理器
     @Bean(name="securityManager")
     public DefaultWebSecurityManager getDefaultWebSecurityManager(@Qualifier("userRealm") Realm realm){
+        System.out.println("进入securityManager方法");
         DefaultWebSecurityManager defaultWebSecurityManager = new DefaultWebSecurityManager();
         //给安全管理器设置
         defaultWebSecurityManager.setRealm(realm);
@@ -51,6 +58,7 @@ public class ShiroConfig {
     //3.创建自定义realm
     @Bean(name="userRealm")
     public Realm getRealm(){
+        System.out.println("进入realm方法");
         return new CustomerRealm();
     }
 }
