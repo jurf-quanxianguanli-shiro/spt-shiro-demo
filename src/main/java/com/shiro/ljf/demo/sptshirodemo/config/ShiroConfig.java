@@ -31,8 +31,11 @@ public class ShiroConfig {
         shiroFilterFactoryBean.setSecurityManager(securityManager);
         //设置过滤资源
         Map<String,String> map =  new LinkedHashMap<>();
-        map.put("/**","authc");
+        //map.put("/**","authc");
         /** 代表拦截项目中一切资源  authc 代表shiro中的一个filter的别名,详细内容看文档的shirofilter列表**/
+        map.put("/index.jsp","authc");//验证资源
+        map.put("/index*","authc");//验证资源
+        shiroFilterFactoryBean.setLoginUrl("/login.jsp");
         shiroFilterFactoryBean.setFilterChainDefinitionMap(map);
         return shiroFilterFactoryBean;
     }
