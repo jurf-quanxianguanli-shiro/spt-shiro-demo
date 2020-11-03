@@ -7,4 +7,5 @@ import org.apache.ibatis.annotations.Mapper;
 public interface UserDao {
     //注册数据
     public void addData(User user);
+    public User findByUserName(String userName);
 }

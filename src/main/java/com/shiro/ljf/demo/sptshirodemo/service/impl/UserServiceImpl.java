@@ -15,10 +15,14 @@ import org.springframework.stereotype.Service;
  * @Date: 2020/11/02 18:09:11 
  * @Version: V1.0
  **/
-@Service
+@Service("userService")
 public class UserServiceImpl  implements UserService {
     @Autowired
     private UserDao userDao;
+    @Override
+    public User findByUserName(String username) {
+        return userDao.findByUserName(username);
+    }
     /**
     * @author liujianfu
     * 注册用户

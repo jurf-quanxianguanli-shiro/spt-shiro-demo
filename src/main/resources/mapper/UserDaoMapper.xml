@@ -3,10 +3,15 @@
 
 <mapper namespace="com.shiro.ljf.demo.sptshirodemo.dao.UserDao" >
 
+ <!--添加数据  -->
 <insert id="addData" parameterType="com.shiro.ljf.demo.sptshirodemo.entity.User">
  insert into t_user values(#{id},#{username},#{password},#{salt})
 </insert>
-
+ <!-- 查找用户名 -->
+ <select id="findByUserName" parameterType="String" resultType="User">
+        select id,username,password,salt from t_user
+        where username = #{username}
+    </select>
 
 
 </mapper>
