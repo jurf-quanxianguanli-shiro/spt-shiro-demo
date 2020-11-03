@@ -38,7 +38,7 @@ public class CustomerRealm extends AuthorizingRealm {
         System.out.println("============================================进入认证方法==================");
         //获取身份信息
         String primaryPrincipal = (String) authenticationToken.getPrincipal();
-        System.out.println("调用授权验证: "+primaryPrincipal);
+        System.out.println("调用验证: "+primaryPrincipal);
         //根据主身份信息获取角色 和 权限信息
         if("admin".equals(primaryPrincipal)) {
             System.out.println("this name:"+this.getName());

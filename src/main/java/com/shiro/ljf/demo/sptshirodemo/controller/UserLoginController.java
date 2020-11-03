@@ -1,10 +1,13 @@
 package com.shiro.ljf.demo.sptshirodemo.controller;
 
+import com.shiro.ljf.demo.sptshirodemo.entity.User;
+import com.shiro.ljf.demo.sptshirodemo.service.UserService;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,6 +24,8 @@ import javax.servlet.http.HttpSession;
 @Controller
 @RequestMapping("user")
 public class UserLoginController {
+    @Autowired
+    private UserService userService;
     /**
      * 用来处理身份认证
      *
@@ -31,6 +36,7 @@ public class UserLoginController {
     @RequestMapping("login")
     public String login(String username, String password, String code, HttpSession session, Model model) {
         try {
+                System.out.println("进入login的登录方法====");
                 //获取主体对象
                 Subject subject = SecurityUtils.getSubject();
                 //当执行这个login的方法，就会触发在自定义的CustomerRealm的AuthenticationInfo的方法
@@ -60,5 +66,23 @@ public class UserLoginController {
         Subject subject = SecurityUtils.getSubject();
         subject.logout();//退出用户
         return "redirect:/login.jsp";
+    }
+    /**
+     * 用户注册
+     */
+    @RequestMapping("register")
+    public String register(User user) {
+        try {
+            System.out.println("进入userController 层了：！！！！！");
+            if(user!=null&&user.getPassword()!=null){
+                System.out.println("user的信息不为null:");
+                userService.register(user);
+                return "redirect:/login.jsp";
+            }
+            return "redirect:/register.jsp";
+        }catch (Exception e){
+            e.printStackTrace();
+            return "redirect:/register.jsp";
+        }
     }
 }
