@@ -13,7 +13,29 @@
 <a href="${pageContext.request.contextPath}/user/logout">退出用户</a>
 <h1>人力管理系统主页V1.0</h1>
 <h>欢迎登录啊！！！</h><br>
-<p><a href="#">订单管理</a> </p>
+<shiro:hasAnyRoles name="admin,guest">
+<p>
+<ul>
+    <a href="#">订单管理</a>
+    <shiro:hasPermission name="haha:add:01">
+   <li><a href="">添加</a></li>
+    </shiro:hasPermission>
+    <shiro:hasPermission name="haha:update:02">
+        <li><a href="">修改</a></li>
+    </shiro:hasPermission>
+    <shiro:hasPermission name="haha:query:03">
+        <li><a href="">查询</a></li>
+    </shiro:hasPermission>
+    <shiro:hasPermission name="haha:del:04">
+        <li><a href="">删除</a></li>
+    </shiro:hasPermission>
+</ul>
+</p>
+</shiro:hasAnyRoles>
 <p><a href="#">用户管理</a> </p>
+<shiro:hasRole name="admin">
+<p><a href="#">系统管理</a> </p>
+<p><a href="#">日志管理</a> </p>
+</shiro:hasRole>
 </body>
 </html>
