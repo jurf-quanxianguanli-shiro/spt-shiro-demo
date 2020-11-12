@@ -24,6 +24,17 @@ public class UserServiceImpl  implements UserService {
         return userDao.findByUserName(username);
     }
     /**
+     * @author liujianfu
+     *根据用户名查询所有角色
+     * @date 2020/11/7 20:18
+     * @param
+     * @return
+     @Override
+     **/
+    public User findRolesByUserName(String username) {
+        return userDao.findRolesByUserName(username);
+    }
+    /*
     * @author liujianfu
     * 注册用户
     * @date 2020/11/3 11:53

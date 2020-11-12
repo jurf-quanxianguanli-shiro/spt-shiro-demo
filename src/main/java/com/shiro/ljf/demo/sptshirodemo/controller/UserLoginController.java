@@ -36,13 +36,13 @@ public class UserLoginController {
     @RequestMapping("login")
     public String login(String username, String password, String code, HttpSession session, Model model) {
         try {
-                System.out.println("进入login的登录方法====");
-                //获取主体对象
-                Subject subject = SecurityUtils.getSubject();
-                //当执行这个login的方法，就会触发在自定义的CustomerRealm的AuthenticationInfo的方法
-                subject.login(new UsernamePasswordToken(username, password));//!!!!
-                return "redirect:/index.jsp";
-            } catch (UnknownAccountException e) {
+            System.out.println("进入login的登录方法====");
+            //获取主体对象
+            Subject subject = SecurityUtils.getSubject();
+            //当执行这个login的方法，就会触发在自定义的CustomerRealm的AuthenticationInfo的方法
+            subject.login(new UsernamePasswordToken(username, password));//!!!!
+            return "redirect:/index.jsp";
+        } catch (UnknownAccountException e) {
             e.printStackTrace();
             System.out.println("用户名错误!");
         } catch (IncorrectCredentialsException e) {
@@ -58,6 +58,7 @@ public class UserLoginController {
         System.out.println("登录页面");
         return "redirect:/login.jsp";
     }
+
     /**
      * 退出登录
      */

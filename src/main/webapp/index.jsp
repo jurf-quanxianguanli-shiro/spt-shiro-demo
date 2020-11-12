@@ -13,7 +13,7 @@
 <a href="${pageContext.request.contextPath}/user/logout">退出用户</a>
 <h1>人力管理系统主页V1.0</h1>
 <h>欢迎登录啊！！！</h><br>
-<shiro:hasAnyRoles name="admin,guest">
+<shiro:hasAnyRoles name="admin,user">
 <p>
 <ul>
     <a href="#">订单管理</a>
@@ -32,8 +32,8 @@
 </ul>
 </p>
 </shiro:hasAnyRoles>
-<p><a href="#">用户管理</a> </p>
 <shiro:hasRole name="admin">
+<p><a href="#">用户管理</a> </p>
 <p><a href="#">系统管理</a> </p>
 <p><a href="#">日志管理</a> </p>
 </shiro:hasRole>

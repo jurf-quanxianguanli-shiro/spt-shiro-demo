@@ -5,6 +5,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
+import java.util.List;
+
 /**
  * @ClassName: Role
  * @Description: TODO
@@ -20,6 +22,7 @@ public class Role {
     private String id;
     private String name;
     //定义权限的集合
-    ///private List<Perms> perms;
+    private List<MenuPerms> perms;
+
 }
 

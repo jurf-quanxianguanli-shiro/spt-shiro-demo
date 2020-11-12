@@ -34,5 +34,5 @@ public class User implements Serializable {
     private String salt;
 
     //定义角色集合
-   // private List<Role> roles;
+    private List<Role> roles;
 }

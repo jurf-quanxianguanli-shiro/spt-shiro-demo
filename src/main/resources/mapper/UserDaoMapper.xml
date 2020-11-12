@@ -12,6 +12,27 @@
         select id,username,password,salt from t_user
         where username = #{username}
     </select>
+    <!--通过用户查询角色 -->
+    <resultMap id="userMap" type="com.shiro.ljf.demo.sptshirodemo.entity.User">
+        <id column="uid" property="id"/>
+        <result column="username" property="username"/>
+        <!--角色信息-->
+        <collection property="roles" javaType="list" ofType="Role">
+            <id column="id" property="id"/>
+            <!-- rname 对应下面 findRolesByUserName的r.NAME rname-->
+            <result column="rname" property="name"/>
+        </collection>
+    </resultMap>
+    <!--通过用户查询角色 -->
+    <select id="findRolesByUserName" parameterType="String" resultMap="userMap">
+      SELECT u.id uid,u.username,r.id,r.NAME rname
+      FROM t_user u
+      LEFT JOIN t_user_role ur
+      ON u.id=ur.userid
+      LEFT JOIN t_role r
+      ON ur.roleid=r.id
+      WHERE u.username=#{username}
+    </select>
 
 
 </mapper>

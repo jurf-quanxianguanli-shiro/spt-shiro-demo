@@ -12,6 +12,7 @@ import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
+import org.apache.shiro.util.CollectionUtils;
 import org.springframework.util.ObjectUtils;
 
 /**
@@ -23,31 +24,44 @@ import org.springframework.util.ObjectUtils;
  **/
 public class CustomerRealm extends AuthorizingRealm {
     /**
-    * @author liujianfu
-    * @description
-    * @date 2020/10/28 16:54
-    * @return org.apache.shiro.authz.AuthorizationInfo
-    */
+     * @author liujianfu
+     * @description    授权方法
+     * @date 2020/10/28 16:54
+     * @return org.apache.shiro.authz.AuthorizationInfo
+     */
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
         System.out.println("进入授权部分======:");
         //获取身份信息
         String primaryPrincipal = (String) principalCollection.getPrimaryPrincipal();
         System.out.println("调用授权验证: "+primaryPrincipal);
+        /**
          if("ljf".equals(primaryPrincipal)){//登录的用户ljf，具有以下角色
-             //角色的授权
-             SimpleAuthorizationInfo simpleAuthorizationInfo = new SimpleAuthorizationInfo();
-             simpleAuthorizationInfo.addRole("admin");
-             simpleAuthorizationInfo.addRole("guest");
-             //权限字符串的授权
-             simpleAuthorizationInfo.addStringPermission("haha:add:01");
-             simpleAuthorizationInfo.addStringPermission("haha:update:02");
-             return simpleAuthorizationInfo;
+         //角色的授权
+         SimpleAuthorizationInfo simpleAuthorizationInfo = new SimpleAuthorizationInfo();
+         simpleAuthorizationInfo.addRole("admin");
+         simpleAuthorizationInfo.addRole("guest");
+         //权限字符串的授权
+         simpleAuthorizationInfo.addStringPermission("haha:add:01");
+         simpleAuthorizationInfo.addStringPermission("haha:update:02");
+         return simpleAuthorizationInfo;
          }
-
+         **/
+        //根据主身份信息获取角色 和 权限信息
+        UserService userService = (UserService) ApplicationContextUtils.getBean("userService");
+        User user = userService.findRolesByUserName(primaryPrincipal);
+        //授权角色信息
+        if(!CollectionUtils.isEmpty(user.getRoles())){
+            SimpleAuthorizationInfo simpleAuthorizationInfo = new SimpleAuthorizationInfo();
+            user.getRoles().forEach(role->{
+                simpleAuthorizationInfo.addRole(role.getName());
+            });
+            return simpleAuthorizationInfo;
+        }
         return null;
     }
-   /**
+
+    /**
    * @author liujianfu
    * @description
    * @date 2020/10/28 16:54

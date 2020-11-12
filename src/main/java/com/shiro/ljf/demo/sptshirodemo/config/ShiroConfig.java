@@ -25,7 +25,7 @@ public class ShiroConfig {
     //1.创建shiroFilter ：负责拦截所有请求
     @Bean
     public ShiroFilterFactoryBean getShiroFilterFactoryBean(@Qualifier("securityManager") DefaultWebSecurityManager securityManager){
-       System.out.println("step3：>>进入过滤器");
+        System.out.println("step3：>>进入过滤器");
         //创建shiro的filter，配置shiroFilterFactoryBean
         ShiroFilterFactoryBean shiroFilterFactoryBean = new ShiroFilterFactoryBean();
         //注入安全管理器
