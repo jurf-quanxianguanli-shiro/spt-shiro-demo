@@ -86,4 +86,18 @@ public class UserLoginController {
             return "redirect:/register.jsp";
         }
     }
+    /**
+     * work
+     */
+    @RequestMapping("work")
+    public String work() {
+        try {
+            System.out.println("进入userController 层了work：！！！！！");
+
+                return "redirect:/order.jsp";
+        }catch (Exception e){
+            e.printStackTrace();
+            return "redirect:/register.jsp";
+        }
+    }
 }

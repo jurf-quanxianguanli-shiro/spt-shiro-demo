@@ -15,7 +15,7 @@ import java.util.Map;
 
 /**
  * @ClassName: ShiroConfig
- * @Description: TODO
+ * @Description: TODO   整合springboot的shiro配置类
  * @Author: liujianfu
  * @Date: 2020/10/28 15:11:16 
  * @Version: V1.0
@@ -36,7 +36,7 @@ public class ShiroConfig {
         /** 代表拦截项目中一切资源  authc 代表shiro中的一个filter的别名,详细内容看文档的shirofilter列表**/
         //map.put("/index.jsp","authc");//验证资源
 
-        //map.put("/index*","anon");//验证资源 anon  匿名访问，可以跳转到index要访问的controller
+      //  map.put("/index*","anon");//验证资源 anon  匿名访问，可以跳转到index要访问的controller
         //设置公共资源 ,anno过滤器，设置访问公共资源，放在前面
         map.put("/user/login","anon");
         map.put("/user/register","anon");//anon 设置为公共资源  放行资源放在前面
@@ -44,6 +44,7 @@ public class ShiroConfig {
         //设置受限资源
 
         map.put("/index*","authc");//验证资源，受限资源，跳转登录login.jsp页面
+        //默认认证跳转路径
         shiroFilterFactoryBean.setLoginUrl("/login.jsp");
         shiroFilterFactoryBean.setFilterChainDefinitionMap(map);
         return shiroFilterFactoryBean;

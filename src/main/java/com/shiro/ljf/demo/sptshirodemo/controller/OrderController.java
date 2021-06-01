@@ -20,8 +20,8 @@ import java.security.Security;
 @RequestMapping("order")
 
 public class OrderController {
-    @RequiresRoles(value={"admin","guest"})
-    @RequiresPermissions(value="haha:add:01")
+    @RequiresRoles(value={"admin","guest"}) //判断角色
+    @RequiresPermissions(value="haha:add:01") //判断权限
     @RequestMapping("save")
     public String index(){
         System.out.println("欢迎跳转至订单主页");

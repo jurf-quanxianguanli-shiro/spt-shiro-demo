@@ -1,5 +1,6 @@
 package com.shiro.ljf.demo.sptshirodemo.shiro;
 
+import com.shiro.ljf.demo.sptshirodemo.entity.MenuPerms;
 import com.shiro.ljf.demo.sptshirodemo.entity.User;
 import com.shiro.ljf.demo.sptshirodemo.service.UserService;
 import com.shiro.ljf.demo.sptshirodemo.utils.ApplicationContextUtils;
@@ -14,6 +15,8 @@ import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.util.CollectionUtils;
 import org.springframework.util.ObjectUtils;
+
+import java.util.List;
 
 /**
  * @ClassName: CustomerRealm
@@ -55,6 +58,13 @@ public class CustomerRealm extends AuthorizingRealm {
             SimpleAuthorizationInfo simpleAuthorizationInfo = new SimpleAuthorizationInfo();
             user.getRoles().forEach(role->{
                 simpleAuthorizationInfo.addRole(role.getName());
+                //权限信息
+                List<MenuPerms> perms = userService.findPermsByRoleId(role.getId());
+                if(!CollectionUtils.isEmpty(perms)){
+                    perms.forEach(perm->{
+                        simpleAuthorizationInfo.addStringPermission(perm.getName());
+                    });
+                }
             });
             return simpleAuthorizationInfo;
         }

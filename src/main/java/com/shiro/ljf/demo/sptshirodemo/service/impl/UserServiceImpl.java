@@ -1,12 +1,15 @@
 package com.shiro.ljf.demo.sptshirodemo.service.impl;
 
 import com.shiro.ljf.demo.sptshirodemo.dao.UserDao;
+import com.shiro.ljf.demo.sptshirodemo.entity.MenuPerms;
 import com.shiro.ljf.demo.sptshirodemo.entity.User;
 import com.shiro.ljf.demo.sptshirodemo.service.UserService;
 import com.shiro.ljf.demo.sptshirodemo.utils.SaltUtils;
 import org.apache.shiro.crypto.hash.Md5Hash;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * @ClassName: UserServiceImpl
@@ -22,6 +25,10 @@ public class UserServiceImpl  implements UserService {
     @Override
     public User findByUserName(String username) {
         return userDao.findByUserName(username);
+    }
+    @Override
+    public List<MenuPerms> findPermsByRoleId(String id) {
+        return userDao.findPermsByRoleId(id);
     }
     /**
      * @author liujianfu

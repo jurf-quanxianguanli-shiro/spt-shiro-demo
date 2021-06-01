@@ -37,5 +37,8 @@
 <p><a href="#">系统管理</a> </p>
 <p><a href="#">日志管理</a> </p>
 </shiro:hasRole>
+<shiro:hasPermission name="worker:01:01">
+<p><a href="${pageContext.request.contextPath}/user/work">工单管理</a> </p>
+</shiro:hasPermission>
 </body>
 </html>

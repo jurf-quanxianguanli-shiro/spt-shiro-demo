@@ -33,6 +33,14 @@
       ON ur.roleid=r.id
       WHERE u.username=#{username}
     </select>
-
+    <!--通过角色id查询权限菜单  -->
+    <select id="findPermsByRoleId" parameterType="String" resultType="com.shiro.ljf.demo.sptshirodemo.entity.MenuPerms">
+      SELECT p.id,p.NAME,p.url,r.NAME
+      FROM t_role r
+      LEFT JOIN t_role_menu_perms rp
+      ON r.id=rp.roleid
+      LEFT JOIN t_menu_perms p ON rp.permsid=p.id
+      WHERE r.id=#{id}
+    </select>
 
 </mapper>
