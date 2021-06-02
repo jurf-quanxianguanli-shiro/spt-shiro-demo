@@ -12,6 +12,14 @@
 <body>
 <a href="${pageContext.request.contextPath}/user/logout">退出用户</a>
 <h1>人力管理系统主页V1.0</h1>
+<h1><shiro:principal/></h1>
+
+<shiro:authenticated>
+    认证之后展示内容 <br>
+</shiro:authenticated>
+<shiro:notAuthenticated>
+    没有认证在之后展示内容
+</shiro:notAuthenticated>
 <h>欢迎登录啊！！！</h><br>
 <shiro:hasAnyRoles name="user,admin">
 <p>

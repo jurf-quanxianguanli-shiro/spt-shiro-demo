@@ -2,6 +2,7 @@ package com.shiro.ljf.demo.sptshirodemo.config;
 
 import com.shiro.ljf.demo.sptshirodemo.shiro.CustomerRealm;
 
+import com.shiro.ljf.demo.sptshirodemo.shiro.cache.RedisCacheManager;
 import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 import org.apache.shiro.cache.ehcache.EhCacheManager;
 import org.apache.shiro.realm.Realm;
@@ -78,6 +79,7 @@ public class ShiroConfig {
         /**
         //开启缓存管理 **/
         customerRealm.setCacheManager(new EhCacheManager());
+     //   customerRealm.setCacheManager(new RedisCacheManager());
         customerRealm.setCachingEnabled(true);//开启全局缓存
         customerRealm.setAuthenticationCachingEnabled(true);//认证认证缓存
         customerRealm.setAuthenticationCacheName("my-authenticationCache");
