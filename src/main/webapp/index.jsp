@@ -8,12 +8,14 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
+
 </head>
 <body>
 <a href="${pageContext.request.contextPath}/user/logout">退出用户</a>
 <h1>人力管理系统主页V1.0</h1>
 <h1><shiro:principal/></h1>
 
+<!-- shiro:principal property="username"/>  -->
 <shiro:authenticated>
     认证之后展示内容 <br>
 </shiro:authenticated>

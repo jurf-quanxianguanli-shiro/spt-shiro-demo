@@ -5,17 +5,17 @@ import com.shiro.ljf.demo.sptshirodemo.entity.User;
 import com.shiro.ljf.demo.sptshirodemo.service.UserService;
 import com.shiro.ljf.demo.sptshirodemo.utils.ApplicationContextUtils;
 import com.shiro.ljf.demo.sptshirodemo.utils.MyByteSource;
-import org.apache.shiro.authc.AuthenticationException;
-import org.apache.shiro.authc.AuthenticationInfo;
-import org.apache.shiro.authc.AuthenticationToken;
-import org.apache.shiro.authc.SimpleAuthenticationInfo;
+import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
+import org.apache.shiro.crypto.hash.Md5Hash;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.util.CollectionUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.util.ObjectUtils;
-
+import org.apache.commons.lang.StringUtils;
 import java.util.List;
 
 /**
@@ -26,6 +26,7 @@ import java.util.List;
  * @Version: V1.0
  **/
 public class CustomerRealm extends AuthorizingRealm {
+    private static final Logger log= LoggerFactory.getLogger(CustomerRealm.class);
     /**
      * @author liujianfu
      * @description    授权方法
@@ -36,8 +37,10 @@ public class CustomerRealm extends AuthorizingRealm {
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
         System.out.println("进入授权部分======:");
         //获取身份信息
-        String primaryPrincipal = (String) principalCollection.getPrimaryPrincipal();
+       String primaryPrincipal = (String) principalCollection.getPrimaryPrincipal();
         System.out.println("调用授权验证: "+primaryPrincipal);
+       // User primaryPrincipal = (User) principalCollection.getPrimaryPrincipal();
+        //System.out.println("调用授权验证: "+primaryPrincipal.getUsername());
         /**
          if("ljf".equals(primaryPrincipal)){//登录的用户ljf，具有以下角色
          //角色的授权
@@ -53,6 +56,7 @@ public class CustomerRealm extends AuthorizingRealm {
         //根据主身份信息获取角色 和 权限信息
         UserService userService = (UserService) ApplicationContextUtils.getBean("userService");
         User user = userService.findRolesByUserName(primaryPrincipal);
+        //User user = userService.findRolesByUserName(primaryPrincipal.getUsername());//不使用密码注册器，这样写
         //授权角色信息
         if(!CollectionUtils.isEmpty(user.getRoles())){
             SimpleAuthorizationInfo simpleAuthorizationInfo = new SimpleAuthorizationInfo();
@@ -80,6 +84,11 @@ public class CustomerRealm extends AuthorizingRealm {
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authenticationToken) throws AuthenticationException {
         System.out.println("============================================进入认证方法==================");
+        UsernamePasswordToken token= (UsernamePasswordToken) authenticationToken;
+        final String userName=token.getUsername();
+        final String password=String.valueOf(token.getPassword());
+
+        log.info("用户名: {} 密码：{}",userName,password);
         /**      写死的部分
         //获取身份信息
         String primaryPrincipal = (String) authenticationToken.getPrincipal();
@@ -99,10 +108,23 @@ public class CustomerRealm extends AuthorizingRealm {
         UserService userService = (UserService) ApplicationContextUtils.getBean("userService");
         User user = userService.findByUserName(principal);
         if(!ObjectUtils.isEmpty(user)){
+
             //设置用户名，密码，随机盐
+             /**  下面语句包含此逻辑的判断,使用此段代码，需要将shiroconfig中的密码注册器注释掉
+             Md5Hash md5Hash2 = new Md5Hash(password, user.getSalt(), 1024);
+             String realPassword=md5Hash2.toHex();
+             System.out.println("加密后:"+realPassword);
+             if (StringUtils.isBlank(realPassword) || !realPassword.equals(user.getPassword())){
+             throw new IncorrectCredentialsException("账户密码不匹配!");
+             }
+             //这里password传入明文
+            return new SimpleAuthenticationInfo(user,password ,this.getName());
+              **/
+
             return new SimpleAuthenticationInfo(user.getUsername(),user.getPassword(),
                     new MyByteSource(user.getSalt()),
                     this.getName());
+
         }
         return null;
     }

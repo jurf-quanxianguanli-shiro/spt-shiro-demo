@@ -16,6 +16,7 @@
 
     <properties>
         <java.version>1.8</java.version>
+        <commons.lang.version>2.6</commons.lang.version>
     </properties>
 
     <dependencies>
@@ -90,6 +91,12 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-redis</artifactId>
+        </dependency>
+        <!--commons下的常用框架-->
+        <dependency>
+            <groupId>commons-lang</groupId>
+            <artifactId>commons-lang</artifactId>
+            <version>${commons.lang.version}</version>
         </dependency>
     </dependencies>
 

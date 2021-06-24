@@ -55,8 +55,14 @@ public class UserLoginController {
 
             }
             else{
-                model.addAttribute("error","验证码错误!");
-                throw new RuntimeException("验证码错误!");
+                if(codes==null){
+                    System.out.println("验证码服务端session为空。。。");
+                }
+                else{
+                    model.addAttribute("error","验证码错误!");
+                    throw new RuntimeException("验证码错误!");
+                }
+
             }
         } catch (UnknownAccountException e) {
             e.printStackTrace();
